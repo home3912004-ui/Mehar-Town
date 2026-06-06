@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="sd" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ميهڙ ٽائون پورٽل - Mehar Town Portal</title>
+    
+    <!-- PWA Settings -->
+    <meta name="theme-color" content="#0d9488">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Leaflet Map CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="desktop-workspace">
+        <!-- Desktop Info Sidebar -->
+        <aside id="info-sidebar">
+            <div class="sidebar-header">
+                <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=100&auto=format&fit=crop&q=80" alt="Logo" class="logo-image">
+                <div>
+                    <h1>ميهڙ ٽائون ويب ايپ / PWA</h1>
+                    <p>عوامي ڀلائي، سماجي آگاهي ۽ شفافيت جو هڪ جديد نظام</p>
+                </div>
+            </div>
+            
+            <div class="simulator-controls">
+                <h3><i class="fa-solid fa-users-cog"></i> يوزر رول تبديل ڪريو (Simulator)</h3>
+                <div class="role-buttons">
+                    <button class="role-btn active" data-role="citizen">
+                        <i class="fa-solid fa-user"></i> عام شهري (Citizen)
+                    </button>
+                    <button class="role-btn" data-role="worker">
+                        <i class="fa-solid fa-handshake-angle"></i> سوشل ورڪر (Social Worker)
+                    </button>
+                    <button class="role-btn" data-role="admin">
+                        <i class="fa-solid fa-user-shield"></i> ايڊمن (Admin)
+                    </button>
+                    <button class="role-btn" data-role="superadmin">
+                        <i class="fa-solid fa-user-ninja"></i> سپر ايڊمن (Super Admin)
+                    </button>
+                </div>
+            </div>
+
+            <div class="feature-overview">
+                <h3><i class="fa-solid fa-star"></i> اهم خاصيتون:</h3>
+                <ul>
+                    <li><strong class="highlight">20 پيجز جو مڪمل فلو:</strong> سڀ اسڪرينز مڪمل طور تي تيار ڪيون ويون آهن.</li>
+                    <li><strong class="highlight">پراگريسيو ويب ايپ (PWA):</strong> موبائل ۾ انسٽال ڪري سگهجي ٿي.</li>
+                    <li><strong class="highlight">Gemini AI ميڪينزم:</strong> تصوير مان مسئلو سڃاڻڻ ۽ شڪايتن جو خلاصو.</li>
+                    <li><strong class="highlight">نقشو:</strong> شڪايتن ۽ سرڪاري منصوبن جي لوڪيشن.</li>
+                    <li><strong class="highlight">مڪمل RTL سپورٽ:</strong> سنڌي ٻوليءَ لاءِ خوبصورت Noto Naskh فونٽ.</li>
+                </ul>
+            </div>
+            
+            <div class="developer-notes">
+                <p><i class="fa-solid fa-code"></i> ڊيٽا کي عارضي طور <strong>localStorage</strong> ۾ محفوظ ڪيو ويو آهي، جنهن ڪري شڪايت داخل ڪرڻ يا اسٽيٽس تبديل ڪرڻ سان سسٽم فوراً اپڊيٽ ٿئي ٿو.</p>
+            </div>
+        </aside>
+
+        <!-- Smartphone Frame Simulator -->
+        <main id="app-container">
+            <div class="smartphone-frame">
+                <!-- Device Speaker -->
+                <div class="device-speaker"></div>
+                
+                <!-- Screen Content Wrapper -->
+                <div class="device-screen">
+                    <!-- Status Bar -->
+                    <header class="status-bar">
+                        <span class="status-time" id="status-time">12:00</span>
+                        <div class="status-icons">
+                            <i class="fa-solid fa-wifi"></i>
+                            <i class="fa-solid fa-signal"></i>
+                            <i class="fa-solid fa-battery-three-quarters"></i>
+                        </div>
+                    </header>
+                    
+                    <!-- App Navigation Header -->
+                    <div id="app-header" class="app-header hidden">
+                        <div class="header-user" onclick="app.navigateTo('profile')">
+                            <img src="" id="header-avatar" alt="Avatar" class="avatar-sm">
+                            <div class="user-greeting">
+                                <span class="greeting-sub">ڀليڪار،</span>
+                                <span class="greeting-name" id="header-username">عام شهري</span>
+                            </div>
+                        </div>
+                        <h2 class="app-logo-text" onclick="app.navigateTo('home')">ميهڙ ٽائون</h2>
+                        <div class="header-actions">
+                            <div class="icon-badge-btn" onclick="app.navigateTo('notifications')">
+                                <i class="fa-regular fa-bell"></i>
+                                <span class="badge hidden" id="notif-badge">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Screen View Area -->
+                    <div id="screen-viewport">
+                        <!-- Screens will be dynamically rendered here by app.js -->
+                    </div>
+
+                    <!-- App Bottom Navigation Bar -->
+                    <nav id="app-nav" class="app-nav hidden">
+                        <button class="nav-item active" data-screen="home">
+                            <i class="fa-solid fa-house-chimney"></i>
+                            <span>مکيه صفحو</span>
+                        </button>
+                        <button class="nav-item" data-screen="complaints">
+                            <i class="fa-solid fa-list-check"></i>
+                            <span>شڪايتون</span>
+                        </button>
+                        <button class="nav-item add-btn" data-screen="add-complaint">
+                            <div class="circle-btn">
+                                <i class="fa-solid fa-plus"></i>
+                            </div>
+                            <span>داخل ڪريو</span>
+                        </button>
+                        <button class="nav-item" data-screen="map">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                            <span>نقشو</span>
+                        </button>
+                        <button class="nav-item" data-screen="menu">
+                            <i class="fa-solid fa-bars"></i>
+                            <span>مينيو</span>
+                        </button>
+                    </nav>
+
+                    <!-- Device Home Indicator -->
+                    <div class="device-home-bar"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Core App JS -->
+    <script src="app.js"></script>
+    
+    <!-- Register Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Service Worker Registered!', reg))
+                    .catch(err => console.log('Service Worker registration failed: ', err));
+            });
+        }
+    </script>
+</body>
+</html>
